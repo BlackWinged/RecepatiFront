@@ -2,9 +2,6 @@
 import { reactive } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 
-import { useMenuStore} from "../stores/menu"
-var menu = useMenuStore();
-
 var classes = reactive({
   "sidebar": true,
 })
