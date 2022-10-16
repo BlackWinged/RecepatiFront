@@ -4,6 +4,7 @@ import { useCurrentObject } from './currentObject'
 
 export const useIngredientStore = defineStore('ingredient', () => {
   
+  
 
   function getNewIngredient() {
     return fetch(import.meta.env.VITE_API_URL + "/ingredient/new")
