@@ -12,6 +12,7 @@ import './assets/vendor/quill/quill.bubble.css';
 import './assets/vendor/remixicon/remixicon.css';
 import './assets/vendor/simple-datatables/style.css';
 import './assets/css/style.css';
+import 'vue-select/dist/vue-select.css';
 
 
 import "bootstrap"
@@ -19,6 +20,7 @@ import "./assets/vendor/quill/quill.min.js"
 import "./assets/vendor/simple-datatables/simple-datatables.js"
 import "./assets/vendor/tinymce/tinymce.min.js"
 import "./assets/js/main.js"
+
 
 const app = createApp(App)
 

@@ -25,6 +25,12 @@ var classes = reactive({
           <span>Novi recepat</span>
         </RouterLink>
       </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <RouterLink class="nav-link collapsed" to="/newingredient">
+          <i class="bi bi-grid"></i>
+          <span>Novi sastojak</span>
+        </RouterLink>
+      </li><!-- End Dashboard Nav -->
       
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">

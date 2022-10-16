@@ -1,3 +1,19 @@
+<script setup>
+import { onMounted } from "vue";
+import { useRecipeStore } from "../stores/recipe"
+import { useCurrentObject } from "../stores/currentObject"
+import vSelect from 'vue-select'
+
+const recipes = useRecipeStore();
+const currentObjectStore = useCurrentObject();
+const currentObject = currentObjectStore.getCurrentObject;
+
+onMounted(() => {
+  recipes.setNewRecipeAsCurrent();
+})
+
+
+</script>
 <template>
   <main id="main" class="main">
     <div class="pagetitle">
@@ -15,14 +31,20 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Floating labels Form</h5>
+              <h5 class="card-title">Novi recepat</h5>
 
               <!-- Floating Labels Form -->
               <form class="row g-3">
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
-                    <label for="floatingName">Your Name</label>
+                    <input v-model="currentObject.name" type="text" class="form-control" id="floatingName"
+                      placeholder="Ime recepata">
+                    <label for="floatingName">Ime recepta</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <v-select multiple v-model="selected" :options="['Canada','United States']" />
                   </div>
                 </div>
                 <div class="col-md-6">
