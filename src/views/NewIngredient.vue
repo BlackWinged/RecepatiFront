@@ -2,7 +2,7 @@
 import { onMounted } from "vue";
 import { useIngredientStore } from "../stores/ingredient"
 import { useCurrentObject } from "../stores/currentObject"
-import vSelect from 'vue-select'
+import IngredientSelect from "../components/selects/IngredientSelect.vue"
 
 const ingredient = useIngredientStore();
 const currentObjectStore = useCurrentObject();
@@ -44,7 +44,7 @@ onMounted(() => {
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <v-select multiple v-model="selected" :options="['Canada','United States']" />
+                    <ingredient-select />
                   </div>
                 </div>
                 <div class="col-md-12">

@@ -1,20 +1,20 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useCurrentObject } from './currentObject'
+import { reactive } from 'vue';
 
 export const useIngredientStore = defineStore('ingredient', () => {
-  
-  
+
+  const currentIngredient = ref({});
 
   function getNewIngredient() {
     return fetch(import.meta.env.VITE_API_URL + "/ingredient/new")
+      .then((data) => {
+        return data.json();
+      });
   }
 
   function setNewIngredientAsCurrent() {
-    var currentObject = useCurrentObject();
-    getNewIngredient().then((data) => {
-       return data.json();
-    }).then((data => currentObject.currentObject = data));
+    getNewIngredient().then((data => currentIngredient = data));
   }
 
   function saveIngredient(ingredient) {
@@ -35,11 +35,26 @@ export const useIngredientStore = defineStore('ingredient', () => {
     saveIngredient(currentObject.currentObject)
   }
 
+  function searchIngredients(query) {
+    if (query)
+      return fetch(import.meta.env.VITE_API_URL + "/ingredient?query=" + query)
+        .then((data) => {
+          return data.json();
+        });
+    else
+      return fetch(import.meta.env.VITE_API_URL + "/ingredient")
+        .then((data) => {
+          return data.json();
+        });
+  }
+
   return {
     setNewIngredientAsCurrent,
     getNewIngredient,
     saveIngredient,
-    saveCurrentIngredient
+    saveCurrentIngredient,
+    searchIngredients,
+    currentIngredient
   }
 
 })
