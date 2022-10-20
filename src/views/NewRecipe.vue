@@ -7,8 +7,8 @@ import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect
 const recipes = useRecipeStore();
 const currentObject = ref({});
 
-function addIngredient(){
-  currentObject.value.ingredients.push({id :null, name: null});
+function addIngredient() {
+  currentObject.value.ingredients.push({ id: null, name: null });
 }
 
 recipes.getNewRecipe()
@@ -53,9 +53,25 @@ onMounted(() => {
                     <button @click="addIngredient" type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <div class="form-floating" v-for="ingredient in currentObject.ingredients">
-                    <ingredient-recipe-select :writtenIngredient="ingredient" />
+                <div v-for="ingredient in currentObject.ingredients">
+                  <div class="col-md-10">
+                    <div class="form-floating">
+                      <ingredient-recipe-select :writtenIngredient="ingredient" />
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="form-floating">
+                      <input v-model="currentObject.size" type="text" class="form-control" id="floatingName"
+                        placeholder="Ime recepata">
+                      <label for="floatingName">Kol</label>
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="form-floating">
+                      <input v-model="currentObject.unit" type="text" class="form-control" id="floatingName"
+                        placeholder="Ime recepata">
+                      <label for="floatingName">Jed</label>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
