@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useIngredientStore } from "../stores/ingredient"
-import { useCurrentObject } from "../stores/currentObject"
 import IngredientSelect from "../components/selects/IngredientSelect.vue"
 
 const ingredient = useIngredientStore();

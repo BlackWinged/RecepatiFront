@@ -1,15 +1,21 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRecipeStore } from "../stores/recipe"
-import { useCurrentObject } from "../stores/currentObject"
 import vSelect from 'vue-select'
+import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect.vue"
 
 const recipes = useRecipeStore();
-const currentObjectStore = useCurrentObject();
-const currentObject = currentObjectStore.getCurrentObject;
+const currentObject = ref({});
+
+function addIngredient(){
+  currentObject.value.ingredients.push({id :null, name: null});
+}
+
+recipes.getNewRecipe()
+  .then((data) => currentObject.value = data);
 
 onMounted(() => {
-  recipes.setNewRecipeAsCurrent();
+
 })
 
 
@@ -34,7 +40,7 @@ onMounted(() => {
               <h5 class="card-title">Novi recepat</h5>
 
               <!-- Floating Labels Form -->
-              <form class="row g-3">
+              <div class="row g-3">
                 <div class="col-md-12">
                   <div class="form-floating">
                     <input v-model="currentObject.name" type="text" class="form-control" id="floatingName"
@@ -44,7 +50,12 @@ onMounted(() => {
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <v-select multiple v-model="selected" :options="['Canada','United States']" />
+                    <button @click="addIngredient" type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-floating" v-for="ingredient in currentObject.ingredients">
+                    <ingredient-recipe-select :writtenIngredient="ingredient" />
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -91,10 +102,10 @@ onMounted(() => {
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button @click="recipes.saveRecipe(currentObject)" class="btn btn-primary">Submit</button>
                   <button type="reset" class="btn btn-secondary">Reset</button>
                 </div>
-              </form><!-- End floating Labels Form -->
+              </div><!-- End floating Labels Form -->
 
             </div>
           </div>
