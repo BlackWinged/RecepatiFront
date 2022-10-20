@@ -1,15 +1,13 @@
 <script setup>
 import { onMounted, reactive } from "vue";
-import { useIngredientStore } from "../stores/ingredient"
-import NewIngredient from "./NewIngredient.vue"
+import { useRecipeStore } from "../stores/recipe"
 
-const ingredient = useIngredientStore();
-const allIngredients = reactive([]);
-var newIngredient = reactive({});
+const recipeStore = useRecipeStore();
+const allRecipes = reactive([]);
 
 onMounted(() => {
-  ingredient.searchIngredients(null).then((data) => {
-    data.map((item) => allIngredients.push(item))
+  recipeStore.searchRecipes(null).then((data) => {
+    data.map((item) => allRecipes.push(item))
   })
 })
 
@@ -32,15 +30,15 @@ onMounted(() => {
         <div class="col-lg-12">
           <div class="row">
             <!-- Sales Card -->
-            <div v-for="ingredient in allIngredients" class="col-xxl-3 col-md-3">
+            <div v-for="recipe in allRecipes" class="col-xxl-3 col-md-3">
               <div class="card info-card sales-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">{{ingredient.name}}</h5>
+                  <h6 class="card-title">{{recipe.name}}</h6>
 
                   <div class="d-flex align-items-center">
                     <div class="ps-3">
-                      <h6>{{ingredient.description}}</h6>
+                      <h5>{{recipe.description}}</h5>
                     </div>
                   </div>
                 </div>
@@ -55,8 +53,8 @@ onMounted(() => {
   </main>
 
   <Teleport to="#control-buttons">
-    <RouterLink to="/newingredient">
-      <button class="btn btn-primary" style="margin-right:20px">Novi sastojak</button>
+    <RouterLink to="/newrecipe">
+      <button class="btn btn-primary" style="margin-right:20px">Novi recepat</button>
     </RouterLink>
   </Teleport>"
 </template>

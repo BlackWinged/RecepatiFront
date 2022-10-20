@@ -1,27 +1,44 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useCurrentObject } from './currentObject'
 
 export const useRecipeStore = defineStore('recipe', () => {
-  const menuOpen = ref(false)
-
-  const getMenuOpen = computed(() => menuOpen)
-
+  
   function getNewRecipe() {
     return fetch(import.meta.env.VITE_API_URL + "/recipe/new")
+    .then((data) => data.json());
   }
 
-  function setNewRecipeAsCurrent() {
-    var currentObject = useCurrentObject();
-    getNewRecipe().then((data) => {
-       return data.json();
-    }).then((data => currentObject.currentObject = data));
+  function searchRecipes(query) {
+    if (query)
+      return fetch(import.meta.env.VITE_API_URL + "/recipe?query=" + query)
+        .then((data) => {
+          return data.json();
+        });
+    else
+      return fetch(import.meta.env.VITE_API_URL + "/recipe")
+        .then((data) => {
+          return data.json();
+        });
   }
+
+  function saveRecipe(recipe) {
+    fetch(import.meta.env.VITE_API_URL + "/recipe/", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(recipe),
+      mode: 'cors',
+      cache: 'default'
+    })
+  }
+
 
   return {
-    menuOpen,
-    getMenuOpen,
-    setNewRecipeAsCurrent
+    getNewRecipe,
+    searchRecipes,
+    saveRecipe
   }
 
 })

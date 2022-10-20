@@ -4,6 +4,7 @@ import TestContent from '../views/TestContent.vue'
 import NewRecipe from '../views/NewRecipe.vue'
 import NewIngredient from '../views/NewIngredient.vue'
 import Ingredients from '../views/Ingredients.vue'
+import Recipes from '../views/Recipes.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: TestContent
+    },
+    {
+      path: '/recipes',
+      name: 'recipes',
+      component: Recipes
     },
     {
       path: '/newrecipe',

@@ -20,9 +20,9 @@ var classes = reactive({
         </RouterLink>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
-        <RouterLink class="nav-link collapsed" to="/newrecipe">
+        <RouterLink class="nav-link collapsed" to="/recipes">
           <i class="bi bi-grid"></i>
-          <span>Novi recepat</span>
+          <span>Recepati</span>
         </RouterLink>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
