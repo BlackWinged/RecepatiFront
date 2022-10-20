@@ -1,15 +1,16 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useIngredientStore } from "../stores/ingredient"
 import { useCurrentObject } from "../stores/currentObject"
 import IngredientSelect from "../components/selects/IngredientSelect.vue"
 
 const ingredient = useIngredientStore();
-const currentObjectStore = useCurrentObject();
-const currentObject = currentObjectStore.getCurrentObject;
+const currentObject = ref({});
+ingredient.getNewIngredient()
+  .then((data) => currentObject.value = data);
 
 onMounted(() => {
-  ingredient.setNewIngredientAsCurrent();
+  
 })
 
 
@@ -44,24 +45,26 @@ onMounted(() => {
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <ingredient-select />
+                    <ingredient-select v-model="currentObject.alternatives"/>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <textarea v-model="currentObject.description" class="form-control" placeholder="Address" id="floatingTextarea" style="height:100px;"></textarea>
+                    <textarea v-model="currentObject.description" class="form-control" placeholder="Address"
+                      id="floatingTextarea" style="height:100px;"></textarea>
                     <label for="floatingName">Opis</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input v-model="currentObject.price" type="number" step=".01" class="form-control" id="price" placeholder="Cijena">
+                    <input v-model="currentObject.price" type="number" step=".01" class="form-control" id="price"
+                      placeholder="Cijena">
                     <label for="floatingEmail">Cijena</label>
                   </div>
                 </div>
 
                 <div class="text-center">
-                  <button @click="ingredient.saveCurrentIngredient" class="btn btn-primary">Neobriši</button>
+                  <button @click="ingredient.saveIngredient(currentObject)" class="btn btn-primary">Neobriši</button>
                   <button type="reset" class="btn btn-secondary">Briši</button>
                 </div>
               </div><!-- End floating Labels Form -->

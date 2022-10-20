@@ -24,6 +24,11 @@ const router = createRouter({
       component: Ingredients
     },
     {
+      path: '/newingredient',
+      name: 'newingredient',
+      component: NewIngredient
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

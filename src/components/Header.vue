@@ -36,7 +36,7 @@ function toggleMenu(){
           </a>
         </li><!-- End Search Icon-->
 
-        <li id="control-buttons" class="nav-item d-block d-lg-none" >
+        <li id="control-buttons" class="nav-item d-block" >
           
         </li><!-- End control buttons-->
 

@@ -1,10 +1,14 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useIngredientStore } from "../../stores/ingredient"
 import vSelect from 'vue-select'
 
 var ingredients = reactive([])
 const ingredient = useIngredientStore();
+const alternatives = ref([]);
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
 
 function searchIngredients(search, loading){
   ingredient.searchIngredients(search).then((data) => {
@@ -13,6 +17,12 @@ function searchIngredients(search, loading){
   })
 
 }
+
+watch(alternatives, function(alternatives) {
+  emit('update:modelValue', alternatives)
+})
+
+
 
 var getOptionLabel = (option) => {
                     if (typeof option === 'object') {
@@ -32,6 +42,11 @@ var getOptionLabel = (option) => {
 </script>
 
 <template>
-  <v-select @search="(search, loading) => searchIngredients(search, loading)" multiple :options="ingredients" :get-option-label="getOptionLabel"/>
+  <v-select @search="(search, loading) => searchIngredients(search, loading)" 
+  multiple 
+  :options="ingredients" 
+  :get-option-label="getOptionLabel" 
+  :value="modelValue"  
+  v-model="alternatives"/>
 </template>
 

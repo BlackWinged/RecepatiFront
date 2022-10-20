@@ -4,7 +4,7 @@ import { reactive } from 'vue';
 
 export const useIngredientStore = defineStore('ingredient', () => {
 
-  const currentIngredient = ref({});
+  // const currentIngredient = ref({});
 
   function getNewIngredient() {
     return fetch(import.meta.env.VITE_API_URL + "/ingredient/new")
@@ -13,9 +13,11 @@ export const useIngredientStore = defineStore('ingredient', () => {
       });
   }
 
-  function setNewIngredientAsCurrent() {
-    getNewIngredient().then((data => currentIngredient = data));
-  }
+  // async function setNewIngredientAsCurrent() {
+  //   currentIngredient.value = await getNewIngredient()
+  // }
+
+  // var getCurrentIngredient = computed(() => currentIngredient.value);
 
   function saveIngredient(ingredient) {
     fetch(import.meta.env.VITE_API_URL + "/ingredient/", {
@@ -30,10 +32,10 @@ export const useIngredientStore = defineStore('ingredient', () => {
     })
   }
 
-  function saveCurrentIngredient(ingredient) {
-    var currentObject = useCurrentObject();
-    saveIngredient(currentObject.currentObject)
-  }
+  // function saveCurrentIngredient(ingredient) {
+  //   var currentObject = useCurrentObject();
+  //   saveIngredient(currentObject.currentObject)
+  // }
 
   function searchIngredients(query) {
     if (query)
@@ -49,12 +51,12 @@ export const useIngredientStore = defineStore('ingredient', () => {
   }
 
   return {
-    setNewIngredientAsCurrent,
+    // getCurrentIngredient,
     getNewIngredient,
     saveIngredient,
-    saveCurrentIngredient,
-    searchIngredients,
-    currentIngredient
+    // saveCurrentIngredient,
+    searchIngredients
+    // currentIngredient
   }
 
 })
