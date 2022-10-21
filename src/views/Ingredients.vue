@@ -36,11 +36,11 @@ onMounted(() => {
               <div class="card info-card sales-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">{{ingredient.name}}</h5>
+                  <h6 class="card-title">{{ingredient.name}}</h6>
 
                   <div class="d-flex align-items-center">
                     <div class="ps-3">
-                      <h6>{{ingredient.description}}</h6>
+                      <h5>{{ingredient.description}}</h5>
                     </div>
                   </div>
                 </div>

@@ -5,14 +5,17 @@ import IngredientSelect from "../components/selects/IngredientSelect.vue"
 
 const ingredient = useIngredientStore();
 const currentObject = ref({});
-ingredient.getNewIngredient()
-  .then((data) => currentObject.value = data);
 
 onMounted(() => {
-  
+  ingredient.getNewIngredient()
+    .then((data) => currentObject.value = data);
 })
 
-
+function saveCurrent(objToSave){
+  ingredient.saveIngredient(objToSave)
+  ingredient.getNewIngredient()
+    .then((data) => currentObject.value = data);
+}
 </script>
 <template>
   <main id="main" class="main">
@@ -63,7 +66,7 @@ onMounted(() => {
                 </div>
 
                 <div class="text-center">
-                  <button @click="ingredient.saveIngredient(currentObject)" class="btn btn-primary">Neobriši</button>
+                  <button @click="saveCurrent(currentObject)" class="btn btn-primary">Neobriši</button>
                   <button type="reset" class="btn btn-secondary">Briši</button>
                 </div>
               </div><!-- End floating Labels Form -->

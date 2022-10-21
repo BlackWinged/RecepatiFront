@@ -1,18 +1,23 @@
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, ref } from "vue";
 import { useRecipeStore } from "../stores/recipe"
+import { useRoute } from 'vue-router'
+import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect.vue"
 
-const recipeStore = useRecipeStore();
-const allRecipes = reactive([]);
+const route = useRoute();
+const recipes = useRecipeStore();
+const currentObject = ref({});
+
+
+recipes.getRecipe(route.params.id)
+  .then((data) => currentObject.value = data);
 
 onMounted(() => {
-  recipeStore.searchRecipes(null).then((data) => {
-    data.map((item) => allRecipes.push(item))
-  })
+
 })
 
-
 </script>
+
 <template>
   <main id="main" class="main">
     <div class="pagetitle">
@@ -30,22 +35,22 @@ onMounted(() => {
         <div class="col-lg-12">
           <div class="row">
             <!-- Sales Card -->
-            <div v-for="recipe in allRecipes" class="col-xxl-3 col-md-3">
-              <RouterLink :to="{ name: 'recipe', params: { id: recipe.id }}">
+            <div class="col-xxl-6 col-md-6">
               <div class="card info-card sales-card">
 
                 <div class="card-body">
-                  <h6 class="card-title">{{recipe.name}}</h6>
-
-                  <div class="d-flex align-items-center">
-                    <div class="ps-3">
-                      <h5>{{recipe.description}}</h5>
+                  <h5 class="card-title">{{currentObject.name}}</h5>
+                    <ul>
+                      <li v-for="ingredient in currentObject.ingredients">
+                        {{ingredient.name}} {{ingredient.size}} {{ingredient.unit}}
+                      </li>
+                    </ul>
+                    <div>
+                      <p>{{currentObject.description}}</p>
                     </div>
-                  </div>
                 </div>
 
               </div>
-            </RouterLink>
             </div><!-- End Sales Card -->
 
           </div>

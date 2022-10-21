@@ -8,6 +8,11 @@ export const useRecipeStore = defineStore('recipe', () => {
     .then((data) => data.json());
   }
 
+  function getRecipe(id) {
+    return fetch(import.meta.env.VITE_API_URL + "/Recipe/byId/" + id)
+    .then((data) => data.json());
+  }
+
   function searchRecipes(query) {
     if (query)
       return fetch(import.meta.env.VITE_API_URL + "/recipe?query=" + query)
@@ -37,6 +42,7 @@ export const useRecipeStore = defineStore('recipe', () => {
 
   return {
     getNewRecipe,
+    getRecipe,
     searchRecipes,
     saveRecipe
   }

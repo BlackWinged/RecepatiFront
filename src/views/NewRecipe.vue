@@ -1,14 +1,18 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRecipeStore } from "../stores/recipe"
+import { useRecipeIngredientStore } from "../stores/recipeIngredient"
 import vSelect from 'vue-select'
 import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect.vue"
 
 const recipes = useRecipeStore();
+const recipeIngredients = useRecipeIngredientStore();
 const currentObject = ref({});
 
 function addIngredient() {
-  currentObject.value.ingredients.push({ id: null, name: null });
+  recipeIngredients.getNewRecipeIngredient().then((data) => {
+    currentObject.value.ingredients.push(data);
+  })
 }
 
 recipes.getNewRecipe()
@@ -34,7 +38,7 @@ onMounted(() => {
     </div><!-- End Page Title -->
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Novi recepat</h5>
@@ -50,73 +54,38 @@ onMounted(() => {
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <button @click="addIngredient" type="submit" class="btn btn-primary">Submit</button>
+                    <button @click="addIngredient" type="submit" class="btn btn-primary">Novi sastojak</button>
                   </div>
                 </div>
-                <div v-for="ingredient in currentObject.ingredients">
-                  <div class="col-md-10">
+                <div class="row" v-for="ingredient in currentObject.ingredients">
+                  <div class="col-md-8">
                     <div class="form-floating">
                       <ingredient-recipe-select :writtenIngredient="ingredient" />
                     </div>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <div class="form-floating">
-                      <input v-model="currentObject.size" type="text" class="form-control" id="floatingName"
+                      <input v-model="ingredient.size" type="text" class="form-control" id="floatingName"
                         placeholder="Ime recepata">
                       <label for="floatingName">Kol</label>
                     </div>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <div class="form-floating">
-                      <input v-model="currentObject.unit" type="text" class="form-control" id="floatingName"
+                      <input v-model="ingredient.unit" type="text" class="form-control" id="floatingName"
                         placeholder="Ime recepata">
                       <label for="floatingName">Jed</label>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingEmail" placeholder="Your Email">
-                    <label for="floatingEmail">Your Email</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
-                  </div>
-                </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <textarea class="form-control" placeholder="Address" id="floatingTextarea"
-                      style="height: 100px;"></textarea>
-                    <label for="floatingTextarea">Address</label>
+                    <textarea v-model="currentObject.description" class="form-control" placeholder="Description"
+                      id="floatingTextarea" style="height: 100px;"></textarea>
+                    <label for="floatingTextarea">Opis</label>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" id="floatingCity" placeholder="City">
-                      <label for="floatingCity">City</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="State">
-                      <option selected>New York</option>
-                      <option value="1">Oregon</option>
-                      <option value="2">DC</option>
-                    </select>
-                    <label for="floatingSelect">State</label>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingZip" placeholder="Zip">
-                    <label for="floatingZip">Zip</label>
-                  </div>
-                </div>
+
                 <div class="text-center">
                   <button @click="recipes.saveRecipe(currentObject)" class="btn btn-primary">Submit</button>
                   <button type="reset" class="btn btn-secondary">Reset</button>

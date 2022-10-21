@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import { useIngredientStore } from "../../stores/ingredient"
 import vSelect from 'vue-select'
 
@@ -8,6 +8,9 @@ const ingredient = useIngredientStore();
 const selectedIngredient = ref({id: null, name: null});
 const props = defineProps(['writtenIngredient'])
 
+onMounted(() => {
+  selectedIngredient.value.name = props.writtenIngredient.name
+})
 
 function searchIngredients(search, loading){
   ingredient.searchIngredients(search).then((data) => {
@@ -19,7 +22,7 @@ function searchIngredients(search, loading){
 
 watch(selectedIngredient, function(selectedIngredient) {
   props.writtenIngredient.name = selectedIngredient.name;
-  props.writtenIngredient.id = selectedIngredient.id;
+  props.writtenIngredient.ingredientId = selectedIngredient.id;
 })
 
 
