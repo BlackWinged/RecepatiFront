@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import { useRecipeStore } from "../stores/recipe"
 import { useRoute } from 'vue-router'
-import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect.vue"
+
 
 const route = useRoute();
 const recipes = useRecipeStore();
@@ -40,14 +40,14 @@ onMounted(() => {
 
                 <div class="card-body">
                   <h5 class="card-title">{{currentObject.name}}</h5>
-                    <ul>
-                      <li v-for="ingredient in currentObject.ingredients">
-                        {{ingredient.name}} {{ingredient.size}} {{ingredient.unit}}
-                      </li>
-                    </ul>
-                    <div>
-                      <p>{{currentObject.description}}</p>
-                    </div>
+                  <ul>
+                    <li v-for="ingredient in currentObject.ingredients">
+                      {{ingredient.name}} {{ingredient.size}} {{ingredient.unit}}
+                    </li>
+                  </ul>
+                  <div>
+                    <p>{{currentObject.description}}</p>
+                  </div>
                 </div>
 
               </div>
@@ -60,10 +60,10 @@ onMounted(() => {
   </main>
 
   <Teleport to="#control-buttons">
-    <RouterLink to="/newrecipe">
-      <button class="btn btn-primary" style="margin-right:20px">Novi recepat</button>
+    <RouterLink v-if="currentObject.id" :to="{name: 'editrecipe', params: {id: currentObject.id}}">
+      <button class="btn btn-primary" style="margin-right:20px">Editiraj recepat</button>
     </RouterLink>
-  </Teleport>"
+  </Teleport>
 </template>
 
 <style>

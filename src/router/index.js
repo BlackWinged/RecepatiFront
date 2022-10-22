@@ -6,6 +6,8 @@ import NewIngredient from '../views/NewIngredient.vue'
 import Ingredients from '../views/Ingredients.vue'
 import Recipes from '../views/Recipes.vue'
 import Recipe from '../views/Recipe.vue'
+import EditRecipe from '../views/EditRecipe.vue'
+import Ingredient from '../views/Ingredient.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,9 +38,19 @@ const router = createRouter({
       component: NewIngredient
     },
     {
+      path: '/ingredient/:id',
+      name: 'ingredient',
+      component: Ingredient
+    },
+    {
       path: '/recipe/:id',
       name: 'recipe',
       component: Recipe
+    },
+    {
+      path: '/editrecipe/:id',
+      name: 'editrecipe',
+      component: EditRecipe
     },
     {
       path: '/about',

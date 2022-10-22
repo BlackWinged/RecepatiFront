@@ -21,10 +21,13 @@ function toggleMenu(){
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
+      <div class="search-form d-flex align-items-center" method="POST" action="#">
+        <div id="search-container">
+
+        </div>
+        <!-- <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button> -->
+        </div>
     </div><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
