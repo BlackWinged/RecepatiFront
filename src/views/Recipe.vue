@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { useRecipeStore } from "../stores/recipe"
 import { useRoute } from 'vue-router'
+import RecipeEditor from "../components/RecipeEditor.vue"
 
 
 const route = useRoute();
@@ -30,33 +31,7 @@ onMounted(() => {
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <section class="section dashboard">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="row">
-            <!-- Sales Card -->
-            <div class="col-xxl-6 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">{{currentObject.name}}</h5>
-                  <ul>
-                    <li v-for="ingredient in currentObject.ingredients">
-                      {{ingredient.name}} {{ingredient.size}} {{ingredient.unit}}
-                    </li>
-                  </ul>
-                  <div>
-                    <p>{{currentObject.description}}</p>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-          </div>
-        </div>
-      </div>
-    </section>
+    <recipe-editor :currentObject="currentObject" :afterSaveEvent="'edit'"></recipe-editor>
   </main>
 
   <Teleport to="#control-buttons">
