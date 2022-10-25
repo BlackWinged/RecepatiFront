@@ -3,10 +3,10 @@ import { useRecipeIngredientStore } from "../stores/recipeIngredient"
 import { onMounted, ref } from "vue";
 import { useRecipeStore } from "../stores/recipe"
 import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect.vue"
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 
-const route = useRoute();
+const router = useRouter();
 const props = defineProps(['currentObject', 'afterSaveEvent'])
 
 const recipes = useRecipeStore();
@@ -21,12 +21,11 @@ function addIngredient() {
 function saveCurrentObject(currentObject) {
   recipes.saveRecipe(currentObject)
   if (props.afterSaveEvent == "new")
-    recipeIngredients.getNewRecipeIngredient().then((data) => {
-      props.currentObject.ingredients.push(data);
-    })
-    if (props.afterSaveEvent == "edit"){
-      route.push({name:'recipe', params: {id: props.currentObject.id}})
-    }
+    recipes.getNewRecipe()
+      .then((data) => currentObject.value = data);
+  if (props.afterSaveEvent == "edit") {
+    router.push({ name: 'recipe', params: { id: currentObject.id } })
+  }
 }
 
 </script>
@@ -90,7 +89,7 @@ function saveCurrentObject(currentObject) {
               </div>
 
               <div class="text-center">
-                <button @click="recipes.saveRecipe(currentObject)" class="btn btn-primary">Submit</button>
+                <button @click="saveCurrentObject(currentObject)" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-secondary">Reset</button>
               </div>
             </div><!-- End floating Labels Form -->
