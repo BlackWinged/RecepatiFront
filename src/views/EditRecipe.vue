@@ -34,11 +34,6 @@ onMounted(() => {
     <recipe-editor :currentObject="currentObject" :afterSaveEvent="'edit'"></recipe-editor>
   </main>
 
-  <Teleport to="#control-buttons">
-    <RouterLink v-if="currentObject.id" :to="{name: 'editrecipe', params: {id: currentObject.id}}">
-      <button class="btn btn-primary" style="margin-right:20px">Editiraj recepat</button>
-    </RouterLink>
-  </Teleport>
 </template>
 
 <style>

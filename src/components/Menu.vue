@@ -31,6 +31,12 @@ var classes = reactive({
           <span>Sastojci</span>
         </RouterLink>
       </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <RouterLink class="nav-link collapsed" to="/fridge">
+          <i class="bi bi-grid"></i>
+          <span>Frižider</span>
+        </RouterLink>
+      </li><!-- End Dashboard Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->
