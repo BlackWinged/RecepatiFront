@@ -1,11 +1,20 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import { useMenuStore} from "../stores/menu"
-
+import { reactive } from 'vue'
 var menu = useMenuStore();
 function toggleMenu(){
   menu.menuOpen = !menu.menuOpen;
 }
+function toggleSearch(){
+  menu.searchOpen = !menu.searchOpen;
+}
+
+var classes = reactive({
+  "search-bar": true,
+  "search-bar-show": menu.getSearchOpen
+
+})
 </script>
 
 <template>
@@ -20,7 +29,7 @@ function toggleMenu(){
       <i @click="toggleMenu" class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    <div :class="classes">
       <div class="search-form d-flex align-items-center" method="POST" action="#">
         <div id="search-container">
 
@@ -34,7 +43,7 @@ function toggleMenu(){
       <ul class="d-flex align-items-center">
 
         <li class="nav-item d-block d-lg-none" >
-          <a class="nav-link nav-icon search-bar-toggle "  href="#">
+          <a class="nav-link nav-icon search-bar-toggle " @click="toggleSearch">
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->

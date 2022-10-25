@@ -1,9 +1,12 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive, watch, computed } from "vue";
 import { useFridgeStore } from "../stores/fridge"
 import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect.vue"
+import SearchBar from '../components/SearchBar.vue'
+import { useSearchStore } from "../stores/search"
 
 const fridgeStore = useFridgeStore();
+const searchBar = useSearchStore();
 const currentObject = ref({});
 
 
@@ -11,15 +14,32 @@ fridgeStore.getFridgeForCurrentUser()
   .then((data) => currentObject.value = data);
 
 
-function addIngredient(){
-  fridgeStore.getNewFridgeIngredient().then((data) => 
+function addIngredient() {
+  fridgeStore.getNewFridgeIngredient().then((data) =>
     currentObject.value.contents.push(data)
   );
 }
 
-function saveCurrentObject(savedObject){
+function saveCurrentObject(savedObject) {
   fridgeStore.saveFridge(savedObject)
 }
+
+var ingredients = computed(() =>{
+  if (searchBar.getQuery) {
+    return currentObject.value.contents.filter((item) => {
+      return item.name.toLowerCase().includes(searchBar.getQuery.toLowerCase())
+    })
+  } else {
+    return currentObject.value.contents;
+  }
+})
+
+watch(computed(() => currentObject.value.contents), () => {
+  saveCurrentObject(currentObject.value)
+},
+{deep: true}
+)
+
 onMounted(() => {
 
 })
@@ -52,20 +72,20 @@ onMounted(() => {
                     <button @click="addIngredient" type="submit" class="btn btn-primary">Novi budući otpad</button>
                   </div>
                 </div>
-                <div class="row" v-for="ingredient in currentObject.contents">
-                  <div class="col-md-8">
+                <div class="row" v-for="ingredient in ingredients">
+                  <div class="col-md-8 col-sm-6">
                     <div class="form-floating">
                       <ingredient-recipe-select :writtenIngredient="ingredient" />
                     </div>
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-2 col-sm-3">
                     <div class="form-floating">
                       <input v-model="ingredient.size" type="text" class="form-control" id="floatingName"
                         placeholder="Ime recepata">
                       <label for="floatingName">Kol</label>
                     </div>
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-2 col-sm-3">
                     <div class="form-floating">
                       <input v-model="ingredient.unit" type="text" class="form-control" id="floatingName"
                         placeholder="Ime recepata">
@@ -88,6 +108,9 @@ onMounted(() => {
     </section>
   </main>
 
+  <Teleport to="#search-container">
+    <SearchBar></SearchBar>
+  </Teleport>
 </template>
 
 <style>
