@@ -60,19 +60,19 @@ function saveCurrentObject(currentObject) {
                 </div>
               </div>
               <div class="row" v-for="ingredient in currentObject.ingredients">
-                <div class="col-md-8">
+                <div class="col-md-8 col-sm-6 recipe-selector">
                   <div class="form-floating">
                     <ingredient-recipe-select :writtenIngredient="ingredient" />
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3 recipe-input">
                   <div class="form-floating">
                     <input v-model="ingredient.size" type="text" class="form-control" id="floatingName"
                       placeholder="Ime recepata">
                     <label for="floatingName">Kol</label>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3 recipe-input">
                   <div class="form-floating">
                     <input v-model="ingredient.unit" type="text" class="form-control" id="floatingName"
                       placeholder="Ime recepata">
@@ -103,5 +103,16 @@ function saveCurrentObject(currentObject) {
 </template>
 
 <style scoped>
+@media (min-width: 350px) {
+  .recipe-input {
+    max-width: 25%;
+  }
+  .recipe-selector {
+    max-width: 50%;
+  }
+}
 
+.recipe-input{
+  padding-bottom: 20px;
+}
 </style>

@@ -20,6 +20,7 @@ function searchIngredients(search, loading){
 
 }
 
+
 watch(selectedIngredient, function(selectedIngredient) {
   props.writtenIngredient.name = selectedIngredient.name;
   props.writtenIngredient.ingredientId = selectedIngredient.id;
@@ -51,3 +52,12 @@ var getOptionLabel = (option) => {
   v-model="selectedIngredient"/>
 </template>
 
+<style scoped>
+@media (max-width: 600px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+}
+</style>
