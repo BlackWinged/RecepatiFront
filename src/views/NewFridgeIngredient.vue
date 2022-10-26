@@ -49,7 +49,7 @@ function saveCurrentObject(savedObject) {
 
                 <div class="col-md-2 col-sm-3 recipe-input">
                   <div class="form-floating">
-                    <input v-model="currentObject.size" type="text" class="form-control" id="floatingName"
+                    <input v-model="currentObject.size" type="number" step=".01" class="form-control" id="floatingName"
                       placeholder="Ime recepata">
                     <label for="floatingName">Kol</label>
                   </div>
