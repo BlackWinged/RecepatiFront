@@ -8,9 +8,9 @@ const ingredient = useIngredientStore();
 const selectedIngredient = ref({id: null, name: null});
 const props = defineProps(['writtenIngredient'])
 
-// onMounted(() => {
-//   selectedIngredient.value.name = props.writtenIngredient.name
-// })
+onMounted(() => {
+  selectedIngredient.value.name = props.writtenIngredient.name
+})
 
 function searchIngredients(search, loading){
   ingredient.searchIngredients(search).then((data) => {
@@ -20,10 +20,10 @@ function searchIngredients(search, loading){
 
 }
 
-// watch(selectedIngredient, function(selectedIngredient) {
-//   props.writtenIngredient.name = selectedIngredient.name;
-//   props.writtenIngredient.ingredientId = selectedIngredient.id;
-// })
+watch(selectedIngredient, function(selectedIngredient) {
+  props.writtenIngredient.name = selectedIngredient.name;
+  props.writtenIngredient.ingredientId = selectedIngredient.id;
+})
 
 
 
@@ -48,6 +48,6 @@ var getOptionLabel = (option) => {
   <v-select @search="(search, loading) => searchIngredients(search, loading)"  
   :options="ingredients" 
   :get-option-label="getOptionLabel" 
-  v-model="writtenIngredient"/>
+  v-model="selectedIngredient"/>
 </template>
 
