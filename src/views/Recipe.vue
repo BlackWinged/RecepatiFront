@@ -40,6 +40,9 @@ onMounted(() => {
 
                 <div class="card-body">
                   <h5 class="card-title">{{currentObject.name}}</h5>
+                  <div v-if="currentObject.url">
+                    Link: <a :href="currentObject.url" target="_blank">Klik mich</a>
+                  </div>
                   <ul>
                     <li v-for="ingredient in currentObject.ingredients">
                       {{ingredient.name}} {{ingredient.size}} {{ingredient.unit}}
