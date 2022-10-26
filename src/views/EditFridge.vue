@@ -111,6 +111,12 @@ onMounted(() => {
   <Teleport to="#search-container">
     <SearchBar></SearchBar>
   </Teleport>
+
+  <Teleport to="#control-buttons">
+    <RouterLink to="/newfridgeingredient">
+      <button class="btn btn-primary" style="margin-right:20px">Novi sastojak</button>
+    </RouterLink>
+  </Teleport>
 </template>
 
 <style scoped>

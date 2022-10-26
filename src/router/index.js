@@ -9,6 +9,7 @@ import Recipe from '../views/Recipe.vue'
 import EditRecipe from '../views/EditRecipe.vue'
 import Ingredient from '../views/Ingredient.vue'
 import EditFridge from '../views/EditFridge.vue'
+import NewFridgeIngredient from '../views/NewFridgeIngredient.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,11 @@ const router = createRouter({
       path: '/fridge',
       name: 'fridge',
       component: EditFridge
+    },
+    {
+      path: '/newfridgeingredient',
+      name: 'newfridgeingredient',
+      component: NewFridgeIngredient
     },
     {
       path: '/about',

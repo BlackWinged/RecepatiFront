@@ -26,11 +26,25 @@ export const useFridgeStore = defineStore('fridge', () => {
     })
   }
 
+  function saveFridgeIngredient(fridgeIngredient){
+    fetch(import.meta.env.VITE_API_URL + "/fridge/saveingredient", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(fridgeIngredient),
+      mode: 'cors',
+      cache: 'default'
+    })
+  }
+
 
   return {
     getFridgeForCurrentUser,
     saveFridge,
-    getNewFridgeIngredient
+    getNewFridgeIngredient,
+    saveFridgeIngredient
   }
 
 })
