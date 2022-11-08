@@ -25,7 +25,7 @@ export const useRecipeStore = defineStore('recipe', () => {
           return data.json();
         });
   }
-
+  
   function saveRecipe(recipe) {
     fetch(import.meta.env.VITE_API_URL + "/recipe/", {
       method: 'POST',
