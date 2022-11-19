@@ -10,6 +10,8 @@ import EditRecipe from '../views/EditRecipe.vue'
 import Ingredient from '../views/Ingredient.vue'
 import EditFridge from '../views/EditFridge.vue'
 import NewFridgeIngredient from '../views/NewFridgeIngredient.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

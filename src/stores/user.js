@@ -16,7 +16,8 @@ export const useUserStore = defineStore('user', () => {
       },
       body: JSON.stringify(user),
       mode: 'cors',
-      cache: 'default'
+      cache: 'default',
+      credentials: 'include'
     })
   }
 
@@ -44,7 +45,7 @@ export const useUserStore = defineStore('user', () => {
       mode: 'cors',
       cache: 'default'
     }).then(x => json(data))
-    .then(x => isLoggedIn.value = true;)
+    .then(x => isLoggedIn.value = true)
   }
 
   return {
@@ -52,7 +53,7 @@ export const useUserStore = defineStore('user', () => {
     isLoggedIn,
     currentUserToken,
     validate,
-    
+    register
 
   }
 

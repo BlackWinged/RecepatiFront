@@ -1,49 +1,13 @@
 <script setup>
 import { onMounted, ref, reactive, watch, computed } from "vue";
-import { useFridgeStore } from "../stores/fridge"
-import IngredientRecipeSelect from "../components/selects/IngredientRecipeSelect.vue"
-import SearchBar from '../components/SearchBar.vue'
-import { useSearchStore } from "../stores/search"
-import { onBeforeRouteUpdate } from 'vue-router'
+import { useUserStore } from "../stores/user"
 
-const fridgeStore = useFridgeStore();
-const searchBar = useSearchStore();
-const currentObject = ref({});
+var userStore = useUserStore();
+var currentUser = reactive({mail: "", password: ""})
 
-onBeforeRouteUpdate((to, from) => {
-
-})
-
-fridgeStore.getFridgeForCurrentUser()
-  .then((data) => currentObject.value = data);
-
-
-function addIngredient() {
-  fridgeStore.getNewFridgeIngredient().then((data) =>
-    currentObject.value.contents.push(data)
-  );
+function StartRegister(currentUser) {
+  userStore.register(currentUser);
 }
-
-function saveCurrentObject(savedObject) {
-  fridgeStore.saveFridge(savedObject)
-}
-
-var ingredients = computed(() =>{
-  if (searchBar.getQuery) {
-    return currentObject.value.contents.filter((item) => {
-      return item.name.toLowerCase().includes(searchBar.getQuery.toLowerCase())
-    })
-  } else {
-    return currentObject.value.contents;
-  }
-})
-
-watch(computed(() => currentObject.value.contents), () => {
-  saveCurrentObject(currentObject.value)
-},
-{deep: true}
-)
-
 onMounted(() => {
 
 })
@@ -51,76 +15,64 @@ onMounted(() => {
 </script>
 
 <template>
-  <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>Form Layouts</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Layouts</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Kaj imam u friđu</h5>
+  <main>
+    <div class="container">
 
-              <!-- Floating Labels Form -->
-              <div class="row g-3">
-                <div class="col-md-12">
-                  <div class="form-floating">
-                    <button @click="addIngredient" type="submit" class="btn btn-primary">Novi budući otpad</button>
-                  </div>
-                </div>
-                <div class="row" v-for="ingredient in ingredients" :key="ingredient.id">
-                  <div class="col-md-8 col-sm-6 recipe-selector">
-                    <div class="form-floating">
-                      <ingredient-recipe-select :writtenIngredient="ingredient" />
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-3 recipe-input">
-                    <div class="form-floating">
-                      <input v-model="ingredient.size" type="number" step=".01" class="form-control" id="floatingName"
-                        placeholder="Ime recepata">
-                      <label for="floatingName">Kol</label>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-3 recipe-input">
-                    <div class="form-floating">
-                      <input v-model="ingredient.unit" type="text" class="form-control" id="floatingName"
-                        placeholder="Ime recepata">
-                      <label for="floatingName">Jed</label>
-                    </div>
-                  </div>
-                </div>
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-                <div class="text-center">
-                  <button @click="saveCurrentObject(currentObject)" class="btn btn-primary">Submit</button>
-                  <button type="reset" class="btn btn-secondary">Reset</button>
-                </div>
-              </div><!-- End floating Labels Form -->
+              <div class="d-flex justify-content-center py-4">
+                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                  <img src="@/assets/img/logo.png" alt="">
+                  <span class="d-none d-lg-block">NiceAdmin</span>
+                </a>
+              </div><!-- End Logo -->
 
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Registriraj novi frižider</h5>
+                    <p class="text-center small">Enter your username &amp; password to login</p>
+                  </div>
+
+                  <div class="row g-3 needs-validation" novalidate="">
+
+                    <div class="col-12">
+                      <label for="yourUsername" class="form-label">Username</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input v-model="currentUser.mail" type="text" name="username" class="form-control" id="yourUsername" required="">
+                        <div class="invalid-feedback">Please enter your username.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Password</label>
+                      <input v-model="currentUser.password" type="password" name="password" class="form-control" id="yourPassword" required="">
+                      <div class="invalid-feedback">Please enter your password!</div>
+                    </div>
+
+                    
+                    <div class="col-12">
+                      <button @click="StartRegister(currentUser)" class="btn btn-primary w-100" type="submit">Login</button>
+                    </div>
+                   
+                  </div>
+
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
-      </div>
-    </section>
+
+      </section>
+
+    </div>
   </main>
-
-  <Teleport to="#search-container">
-    <SearchBar></SearchBar>
-  </Teleport>
-
-  <Teleport to="#control-buttons">
-    <RouterLink to="/newfridgeingredient">
-      <button class="btn btn-primary" style="margin-right:20px">Novi sastojak</button>
-    </RouterLink>
-  </Teleport>
 </template>
 
 <style scoped>
@@ -128,12 +80,13 @@ onMounted(() => {
   .recipe-input {
     max-width: 25%;
   }
+
   .recipe-selector {
     max-width: 50%;
   }
 }
 
-.recipe-input{
+.recipe-input {
   padding-bottom: 20px;
 }
 </style>
