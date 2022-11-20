@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function register(user) {
-    postRequest("/User/Regisger/", user)
+    postRequest("/User/Register/", user)
   }
 
   function validate(token) {
