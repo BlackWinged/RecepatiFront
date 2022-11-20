@@ -1,56 +1,23 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { getRequest, postRequest } from '../code/ajaxRequest';
 
 export const useFridgeStore = defineStore('fridge', () => {
 
   function getFridgeForCurrentUser() {
-    return fetch(import.meta.env.VITE_API_URL + "/fridge/currentuser/")
-      .then((data) => {
-        if (!data.ok) {
-          // get error message from body or default to response status
-          const error = (data && data.message) || data.status;
-          return Promise.reject(error);
-        }
-        return data.json()
-      })
-      .catch(error => {
-        // var router = useRouter();
-        // if (error == 403){
-        //   router.push({ name: 'login', params: { id: currentObject.id } })  
-        // }
-        
-      })
+    return getRequest("/fridge/currentuser/")
   }
 
   function getNewFridgeIngredient() {
-    return fetch(import.meta.env.VITE_API_URL + "/fridge/Ingredient/new")
-      .then((data) => data.json());
+    getRequest("/fridge/Ingredient/new");
   }
 
   function saveFridge(fridge) {
-    fetch(import.meta.env.VITE_API_URL + "/fridge/savecurrentuser", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(fridge),
-      mode: 'cors',
-      cache: 'default'
-    })
+    postRequest("/fridge/savecurrentuser", fridge)
   }
 
   function saveFridgeIngredient(fridgeIngredient) {
-    fetch(import.meta.env.VITE_API_URL + "/fridge/saveingredient", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(fridgeIngredient),
-      mode: 'cors',
-      cache: 'default'
-    })
+    postRequest("/fridge/saveingredient", fridgeIngredient)
   }
 
 

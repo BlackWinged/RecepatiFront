@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { postRequest } from '../code/ajaxRequest';
 
 export const useUserStore = defineStore('user', () => {
 
@@ -8,30 +9,11 @@ export const useUserStore = defineStore('user', () => {
 
   })
   function logIn(user) {
-    fetch(import.meta.env.VITE_API_URL + "/User/LogIn/", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-      mode: 'cors',
-      cache: 'default',
-      credentials: 'include'
-    })
+    postRequest("/User/LogIn/", user)
   }
 
   function register(user) {
-    fetch(import.meta.env.VITE_API_URL + "/User/Register/", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-      mode: 'cors',
-      cache: 'default'
-    })
+    postRequest("/User/Regisger/", user)
   }
 
   function validate(token) {
@@ -41,7 +23,7 @@ export const useUserStore = defineStore('user', () => {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(token),
       mode: 'cors',
       cache: 'default'
     }).then(x => json(data))
