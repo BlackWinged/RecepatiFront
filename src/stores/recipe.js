@@ -9,18 +9,27 @@ export const useRecipeStore = defineStore('recipe', () => {
   }
 
   function getRecipe(id) {
-    return fetch(import.meta.env.VITE_API_URL + "/Recipe/byId/" + id)
+    return fetch(import.meta.env.VITE_API_URL + "/Recipe/byId/" + id, {
+      credentials: 'include',
+      mode: 'cors',
+    })
     .then((data) => data.json());
   }
 
   function searchRecipes(query) {
     if (query)
-      return fetch(import.meta.env.VITE_API_URL + "/recipe?query=" + query)
+      return fetch(import.meta.env.VITE_API_URL + "/recipe?query=" + query, {
+        credentials: 'include',
+        mode: 'cors',
+      })
         .then((data) => {
           return data.json();
         });
     else
-      return fetch(import.meta.env.VITE_API_URL + "/recipe")
+      return fetch(import.meta.env.VITE_API_URL + "/recipe", {
+        credentials: 'include',
+        mode: 'cors',
+      })
         .then((data) => {
           return data.json();
         });
